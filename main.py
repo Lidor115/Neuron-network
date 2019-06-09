@@ -86,24 +86,59 @@ def calcProbability(params, Relu, x):
     h = g(z1)
     z2 = np.dot(w2, h) + b2
     y_hat = softMax(z2)
-    return y_hat, h
+    return y_hat, h, z1
 
 
-def backprop(params, x, y, y_hat, loss, h):
-    gradientW2 = np.outer(y_hat, h)
+def backprop(params, x, y, y_hat, loss, h, z1):
+    w1, b1, w2, b2 = params
+
+    # derivative loss by y_hat multiply derivative y_hat by z2 relevant for both d_W1 AND d_W2
+    y_hat_new = np.subtract(y_hat, 1)
+    # Calc dloss_w2:
+    dz2_w2 = h
+    dlossW2 = np.dot(y_hat_new, dz2_w2.T)
+
+    # Calc dloss w1:
+    dz2_h1 = w2
+    g = np.vectorize(DevRelu)
+    dh1_z1 = g(z1)
+    dz1_w1 = np.divide(x, np.size(x, 0))
+
+    tempA = np.dot(y_hat_new.T, dz2_h1)
+    tempB = np.dot(tempA, dh1_z1)
+    dlossW1 = np.dot(tempB, np.reshape(dz1_w1, (-1, 1)).T)
+
+    # TODO - understand the Transpose. the Derivative should be correct (we looked at the guide)
+    db2 = y_hat_new
+    db1 =(np.dot(y_hat_new.T, w2) * dh1_z1.T).T
+
+    return dlossW1, dlossW2, db1, db2
 
 
 def train(params, epochs, learningRate, train_x, train_y, dev_x, dev_y):
+    w1, b1, w2, b2 = params
     for i in range(epochs):
+        counter = 0
         sum_loss = 0.0
         shuffleAllData(train_x, train_y)
         for x, y in zip(train_x, train_y):
-            y_hat, h = calcProbability(params, Relu, x)
+            y_hat, h, z1 = calcProbability(params, Relu, x)
             loss = Loss(y_hat, y)
             sum_loss += loss
-            gradients = backprop(params, x, y, y_hat, loss, h)
 
-            # w1 = w1 - LRT * w1_new
+            # TODO - All the parameters return zero (dlossW1, dlossW2,db1,db2..)
+            dlossW1, dlossW2,db1,db2 = backprop(params, x, y, y_hat, loss, h, z1)
+            w1[counter] = np.subtract(w1[counter], np.dot(LRT, dlossW1))
+            w2 = np.subtract(w2[counter], np.dot(LRT, dlossW2))
+            b1=db1
+            b2=db2
+            counter += 1
+            params = w1, b1, w2, b2
+
+
+def Dsoftmax(x):
+    s = x.reshape(-1, 1)
+    return np.diagflat(s) - np.dot(s, s.T)
 
 
 def main():
@@ -132,6 +167,7 @@ def main():
 
     # The train algorithm
     train(params, epoch, LRT, train_x, train_y, test_x, test_y)
+    print(params[0])
 
 
 if __name__ == '__main__':
