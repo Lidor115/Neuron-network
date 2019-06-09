@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24867b5a-ba23-461e-b655-fd3e11e3d70f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test_x" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/train_x" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/train_y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Neuron-network.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Neuron-network.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Neuron_network$main.coverage" NAME="main Coverage Results" MODIFIED="1560094790324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Neuron_network$main.coverage" NAME="main Coverage Results" MODIFIED="1560097936590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="180116106">
@@ -44,7 +38,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="3952" />
+          <entry key="py" value="3976" />
           <entry key="test_x" value="1" />
           <entry key="train_x" value="17" />
         </counts>
@@ -52,7 +46,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="18" />
-          <entry key="Python" value="3952" />
+          <entry key="Python" value="3976" />
         </counts>
       </usages-collector>
     </session>
@@ -62,16 +56,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="168" column="34" selection-start-line="168" selection-start-column="34" selection-end-line="168" selection-end-column="34" />
+            <state relative-caret-position="418">
+              <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <marker date="1560097151209" expanded="true" signature="826:995" ph="..." />
-                <marker date="1560097151209" expanded="true" signature="1238:1277" ph="..." />
-                <marker date="1560097151209" expanded="true" signature="1277:1565" ph="..." />
-                <marker date="1560097151209" expanded="true" signature="1790:2762" ph="..." />
-                <marker date="1560097151209" expanded="true" signature="2760:2762" ph="..." />
-                <marker date="1560097151209" expanded="true" signature="2911:3630" ph="..." />
+                <marker date="1560097909991" expanded="true" signature="826:995" ph="..." />
+                <marker date="1560097909991" expanded="true" signature="1238:1277" ph="..." />
+                <marker date="1560097909991" expanded="true" signature="1277:1565" ph="..." />
+                <marker date="1560097909991" expanded="true" signature="1790:2762" ph="..." />
+                <marker date="1560097909991" expanded="true" signature="2760:2762" ph="..." />
+                <marker date="1560097909991" expanded="true" signature="2911:3579" ph="..." />
               </folding>
             </state>
           </provider>
@@ -276,7 +270,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="SciView" order="4" weight="0.21641791" />
+      <window_info active="true" anchor="right" id="SciView" order="4" visible="true" weight="0.21641791" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,11 +287,21 @@
           <line>169</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>130</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>b1</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>(np.dot(y_hat_new.T, w2))*dh1_z1.T</expression-string>
         <language-id>Python</language-id>
@@ -335,16 +339,6 @@
       </expression>
       <expression>
         <expression-string>np.dot(y_hat_new.T, w2.T) * dh1_z1</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>np.dot(y_hat_new, w2.T) * dh1_z1</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>np.dot(y_hat_new.T, w2)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -453,16 +447,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="168" column="34" selection-start-line="168" selection-start-column="34" selection-end-line="168" selection-end-column="34" />
+        <state relative-caret-position="418">
+          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <marker date="1560097151209" expanded="true" signature="826:995" ph="..." />
-            <marker date="1560097151209" expanded="true" signature="1238:1277" ph="..." />
-            <marker date="1560097151209" expanded="true" signature="1277:1565" ph="..." />
-            <marker date="1560097151209" expanded="true" signature="1790:2762" ph="..." />
-            <marker date="1560097151209" expanded="true" signature="2760:2762" ph="..." />
-            <marker date="1560097151209" expanded="true" signature="2911:3630" ph="..." />
+            <marker date="1560097909991" expanded="true" signature="826:995" ph="..." />
+            <marker date="1560097909991" expanded="true" signature="1238:1277" ph="..." />
+            <marker date="1560097909991" expanded="true" signature="1277:1565" ph="..." />
+            <marker date="1560097909991" expanded="true" signature="1790:2762" ph="..." />
+            <marker date="1560097909991" expanded="true" signature="2760:2762" ph="..." />
+            <marker date="1560097909991" expanded="true" signature="2911:3579" ph="..." />
           </folding>
         </state>
       </provider>

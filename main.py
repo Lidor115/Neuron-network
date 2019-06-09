@@ -128,10 +128,10 @@ def train(params, epochs, learningRate, train_x, train_y, dev_x, dev_y):
 
             # TODO - All the parameters return zero (dlossW1, dlossW2,db1,db2..)
             dlossW1, dlossW2,db1,db2 = backprop(params, x, y, y_hat, loss, h, z1)
-            w1[counter] = np.subtract(w1[counter], np.dot(LRT, dlossW1))
-            w2 = np.subtract(w2[counter], np.dot(LRT, dlossW2))
-            b1=db1
-            b2=db2
+            w1 -= LRT*dlossW1
+            w2 -= LRT*dlossW2
+            b1-=np.dot(LRT,db1)
+            b2-=np.dot(LRT,db2)
             counter += 1
             params = w1, b1, w2, b2
 
