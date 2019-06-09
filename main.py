@@ -96,7 +96,11 @@ def backprop(params, x, y, y_hat, loss, h, z1):
     y_hat_new = np.subtract(y_hat, 1)
     # Calc dloss_w2:
     dz2_w2 = h
-    dlossW2 = np.dot(y_hat_new, dz2_w2.T)
+    dlossW2 = np.outer(y_hat_new, dz2_w2)
+    temp123 = np.reshape(dlossW2[int(y), :], (-1, 1))
+    temp123 -= h
+
+
 
     # Calc dloss w1:
     dz2_h1 = w2
@@ -109,7 +113,8 @@ def backprop(params, x, y, y_hat, loss, h, z1):
     dlossW1 = np.dot(tempB, np.reshape(dz1_w1, (-1, 1)).T)
 
     # TODO - understand the Transpose. the Derivative should be correct (we looked at the guide)
-    db2 = y_hat_new
+    db2 = np.copy(y_hat_new)
+    db2[int(y)] -= 1
     db1 =(np.dot(y_hat_new.T, w2) * dh1_z1.T).T
 
     return dlossW1, dlossW2, db1, db2
