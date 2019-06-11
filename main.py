@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-import scipy as sp
 import random
 
 # Global params
@@ -30,7 +29,7 @@ def initialize_weights(H_size, I_size=1):
     :param I_size: the columns size- default is 1
     :return: new matrix of the size we want
     """
-    matrix = np.zeros(shape=(H_size, I_size))
+    matrix = np.random.randn(H_size, I_size)
     return matrix
 
 
@@ -91,9 +90,11 @@ def calcProbability(params, Relu, x):
 
 def backprop(params, x, y, y_hat, loss, h, z1):
     w1, b1, w2, b2 = params
+    specific_y = np.zeros_like(y_hat)
+    specific_y[int(y)] = 1
 
     # derivative loss by y_hat multiply derivative y_hat by z2 relevant for both d_W1 AND d_W2
-    y_hat_new = np.subtract(y_hat, 1)
+    y_hat_new= y_hat-specific_y
     # Calc dloss_w2:
     dz2_w2 = h
     dlossW2 = np.outer(y_hat_new, dz2_w2)
