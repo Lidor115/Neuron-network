@@ -115,7 +115,6 @@ def backprop(params, x, y, y_hat, loss, h, z1):
 
     # TODO - understand the Transpose. the Derivative should be correct (we looked at the guide)
     db2 = np.copy(y_hat_new)
-    db2[int(y)] -= 1
     db1 =(np.dot(y_hat_new.T, w2) * dh1_z1.T).T
 
     return dlossW1, dlossW2, db1, db2
@@ -136,8 +135,8 @@ def train(params, epochs, learningRate, train_x, train_y, dev_x, dev_y):
             dlossW1, dlossW2,db1,db2 = backprop(params, x, y, y_hat, loss, h, z1)
             w1 -= LRT*dlossW1
             w2 -= LRT*dlossW2
-            b1-=np.dot(LRT,db1)
-            b2-=np.dot(LRT,db2)
+            b1-= LRT*db1
+            b2-= LRT*db2
             counter += 1
             params = w1, b1, w2, b2
 
@@ -146,6 +145,16 @@ def Dsoftmax(x):
     s = x.reshape(-1, 1)
     return np.diagflat(s) - np.dot(s, s.T)
 
+def get_accuracy(w1, w2, b1, b2, x_valid, y_valid):
+    true = 0
+    params = [w1,b1,w2,b2]
+    for x, y in zip(x_valid, y_valid):
+        x = np.reshape(x, (1, input_size))
+        y_hat, h, z1 = calcProbability(params, Relu, x)
+        max_y = y_hat.argmax(axis=0)
+        if max_y[0] == int(y):
+            true += 1
+    return true / float(len(y_valid))
 
 def main():
     # Open files and read content
@@ -173,8 +182,8 @@ def main():
 
     # The train algorithm
     train(params, epoch, LRT, train_x, train_y, test_x, test_y)
-    print(params[0])
-
+    accuracy = get_accuracy(W1, W2, b1, b2, train_x, test_y)
+    print(epoch, accuracy * 100)
 
 if __name__ == '__main__':
     main()

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24867b5a-ba23-461e-b655-fd3e11e3d70f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Neuron-network.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Neuron-network.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -21,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+            <state relative-caret-position="205">
+              <caret line="65" column="7" lean-forward="true" selection-start-line="65" selection-start-column="7" selection-end-line="65" selection-end-column="7" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -35,11 +33,14 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>initialize_weights</find>
-      <find>calcProbability</find>
       <find>int(y)</find>
       <find>spec</find>
       <find>backprop</find>
       <find>z2</find>
+      <find>calcProbability</find>
+      <find>Relu</find>
+      <find>calcProbability(params, Relu, x)</find>
+      <find>for</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -80,7 +81,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -96,6 +96,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -182,13 +183,13 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.32824427" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49733475" visible="true" weight="0.39367503" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.32824427" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49733475" weight="0.39367503" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49959514" weight="0.3291815" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49959514" weight="0.3291815" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49959514" weight="0.32824427" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5026652" side_tool="true" weight="0.39370933" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
@@ -206,11 +207,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>175</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
           <line>116</line>
@@ -316,12 +312,12 @@
     </entry>
     <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python36_64/Lib/codecs.py" />
     <entry file="file://$PROJECT_DIR$/train_x">
+      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="LargeFileEditor">
         <state relative-caret-position="175">
           <caret line="10" selection-end-line="578" selection-end-column="1274" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/train_y">
       <provider selected="true" editor-type-id="text-editor">
@@ -354,8 +350,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+        <state relative-caret-position="205">
+          <caret line="65" column="7" lean-forward="true" selection-start-line="65" selection-start-column="7" selection-end-line="65" selection-end-column="7" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
