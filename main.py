@@ -1,14 +1,15 @@
 import sys
 import numpy as np
 import random
+from scipy.special import softmax
 
 # Global params
 sizeOfTrain = 0.8
-InitH = 12  # between 10-784
+InitH = 100  # between 10-784
 LRT = 0.1  # learning rate between 0.0001, 0.001, 0.01 ...
 input_size = 28 * 28
 output_size = 10
-epoch = 10  # we don't want over fitting
+epoch = 24  # we don't want over fitting
 
 
 def shuffleAllData(x, y):
@@ -37,8 +38,7 @@ def softMax(x):
     """Compute softmax values for each sets of scores in x.
     :param x: vector of features
     """
-    e_x = np.exp(x - np.max(x))
-    return e_x / e_x.sum(axis=0)
+    return softmax(x,axis=0)
 
 
 def Relu(x):
@@ -66,8 +66,9 @@ def Loss(y_hat, y):
     """
     specific_y = np.zeros(y_hat.size)
     specific_y[int(y)] = 1
-    # TODO CHECK ABOUT ZERO np.log2(y_hat)
-    return -np.dot(specific_y, np.log2(y_hat))
+    temp = np.copy(y_hat)
+    temp[temp==0] =1
+    return -np.dot(specific_y, np.log2(temp))
 
 
 def calcProbability(params, Relu, x):
@@ -83,6 +84,7 @@ def calcProbability(params, Relu, x):
     z1 = np.dot(w1, new_x) + b1
     g = np.vectorize(Relu)
     h = g(z1)
+    h = h / (np.max(h) or 1)
     z2 = np.dot(w2, h) + b2
     y_hat = softMax(z2)
     return y_hat, h, z1
@@ -94,50 +96,39 @@ def backprop(params, x, y, y_hat, loss, h, z1):
     specific_y[int(y)] = 1
 
     # derivative loss by y_hat multiply derivative y_hat by z2 relevant for both d_W1 AND d_W2
-    y_hat_new= y_hat-specific_y
+    y_hat_new = y_hat - specific_y
     # Calc dloss_w2:
     dz2_w2 = h
-    dlossW2 = np.outer(y_hat_new, dz2_w2)
-    temp123 = np.reshape(dlossW2[int(y), :], (-1, 1))
-    temp123 -= h
-
+    dlossW2 = np.dot(y_hat_new,dz2_w2.T)
 
 
     # Calc dloss w1:
     dz2_h1 = w2
     g = np.vectorize(DevRelu)
     dh1_z1 = g(z1)
-    dz1_w1 = np.divide(x, np.size(x, 0))
 
-    tempA = np.dot(y_hat_new.T, dz2_h1)
-    tempB = np.dot(tempA, dh1_z1)
-    dlossW1 = np.dot(tempB, np.reshape(dz1_w1, (-1, 1)).T)
-
-    # TODO - understand the Transpose. the Derivative should be correct (we looked at the guide)
     db2 = np.copy(y_hat_new)
-    db1 =(np.dot(y_hat_new.T, w2) * dh1_z1.T).T
+    db1 = (np.dot(y_hat_new.T, w2) * dh1_z1.T).T
+    dlossW1 = np.dot(db1,np.reshape(x,(-1,1)).T)
 
     return dlossW1, dlossW2, db1, db2
 
 
-def train(params, epochs, learningRate, train_x, train_y, dev_x, dev_y):
+def train(params, epochs, learningRate, train_x, train_y):
     w1, b1, w2, b2 = params
     for i in range(epochs):
-        counter = 0
+        print ("Epoch num" + str(i))
         sum_loss = 0.0
         shuffleAllData(train_x, train_y)
         for x, y in zip(train_x, train_y):
             y_hat, h, z1 = calcProbability(params, Relu, x)
             loss = Loss(y_hat, y)
             sum_loss += loss
-
-            # TODO - All the parameters return zero (dlossW1, dlossW2,db1,db2..)
-            dlossW1, dlossW2,db1,db2 = backprop(params, x, y, y_hat, loss, h, z1)
-            w1 -= LRT*dlossW1
-            w2 -= LRT*dlossW2
-            b1-= LRT*db1
-            b2-= LRT*db2
-            counter += 1
+            dlossW1, dlossW2, db1, db2 = backprop(params, x, y, y_hat, loss, h, z1)
+            w1 -= LRT * dlossW1
+            w2 -= LRT * dlossW2
+            b1 -= LRT * db1
+            b2 -= LRT * db2
             params = w1, b1, w2, b2
 
 
@@ -145,9 +136,10 @@ def Dsoftmax(x):
     s = x.reshape(-1, 1)
     return np.diagflat(s) - np.dot(s, s.T)
 
+
 def get_accuracy(w1, w2, b1, b2, x_valid, y_valid):
     true = 0
-    params = [w1,b1,w2,b2]
+    params = [w1, b1, w2, b2]
     for x, y in zip(x_valid, y_valid):
         x = np.reshape(x, (1, input_size))
         y_hat, h, z1 = calcProbability(params, Relu, x)
@@ -155,6 +147,13 @@ def get_accuracy(w1, w2, b1, b2, x_valid, y_valid):
         if max_y[0] == int(y):
             true += 1
     return true / float(len(y_valid))
+
+def testingDev(Dev_X,params):
+    file = open("test_y.txt", 'w+')
+    for i in Dev_X:
+        y_hat, h, z1 = calcProbability(params, Relu, i)
+        file.write(str(np.argmax(y_hat))+ "\n")
+    file.close()
 
 def main():
     # Open files and read content
@@ -165,13 +164,15 @@ def main():
     DataSet_X = np.loadtxt(arg1)
     DataSet_Y = np.loadtxt(arg2)
     Dev_X = np.loadtxt(arg3)
-
+    DataSet_X = np.divide(DataSet_X, 255)
     # Shuffle and split data to train and test
     DataSet_X, DataSet_Y = shuffleAllData(DataSet_X, DataSet_Y)
-    trainSize = len(DataSet_X) * sizeOfTrain
-    trainSize = int(trainSize)
-    train_x, train_y = DataSet_X[:trainSize], DataSet_Y[:trainSize]
-    test_x, test_y = DataSet_X[trainSize:], DataSet_Y[trainSize:]
+    #trainSize = len(DataSet_X) * sizeOfTrain
+    #trainSize = int(trainSize)
+    #print ("TRAIN SIZE IS" + str(trainSize))
+
+    #train_x, train_y = DataSet_X[:trainSize], DataSet_Y[:trainSize]
+    #test_x, test_y = DataSet_X[trainSize:], DataSet_Y[trainSize:]
 
     # Declarations of Hyper-Params
     hidden_size = InitH
@@ -181,9 +182,11 @@ def main():
     params = [W1, b1, W2, b2]
 
     # The train algorithm
-    train(params, epoch, LRT, train_x, train_y, test_x, test_y)
-    accuracy = get_accuracy(W1, W2, b1, b2, train_x, test_y)
-    print(epoch, accuracy * 100)
+    train(params, epoch, LRT, DataSet_X, DataSet_Y)
+    #accuracy = get_accuracy(W1, W2, b1, b2, test_x, test_y)
+    #print(epoch, accuracy * 100)
+    testingDev(Dev_X, params)
+
 
 if __name__ == '__main__':
     main()
