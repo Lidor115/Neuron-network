@@ -1,3 +1,8 @@
+"""
+Lidor Alis 201025160
+Eldar Shalev 312349103
+"""
+
 import sys
 import numpy as np
 import random
@@ -91,6 +96,17 @@ def calcProbability(params, Relu, x):
 
 
 def backprop(params, x, y, y_hat, loss, h, z1):
+    """
+
+    :param params: the params
+    :param x: the line x
+    :param y: the y according to the Y
+    :param y_hat: the vector we guess of Y
+    :param loss: the loss function
+    :param h: the hyper parameter
+    :param z1: the function we need from fast prop
+    :return: w1,w1,b1,b2 after gradient
+    """
     w1, b1, w2, b2 = params
     specific_y = np.zeros_like(y_hat)
     specific_y[int(y)] = 1
@@ -115,9 +131,18 @@ def backprop(params, x, y, y_hat, loss, h, z1):
 
 
 def train(params, epochs, learningRate, train_x, train_y):
+    """
+
+    :param params: the paramas w1,w2,b1,b2
+    :param epochs: times to run the loop
+    :param learningRate: the delta/cosnt to learn the data
+    :param train_x: our train x
+    :param train_y: the Y
+    :return: the test trained
+    """
     w1, b1, w2, b2 = params
     for i in range(epochs):
-        print ("Epoch num" + str(i))
+        #print ("Epoch num" + str(i))
         sum_loss = 0.0
         shuffleAllData(train_x, train_y)
         for x, y in zip(train_x, train_y):
@@ -167,12 +192,8 @@ def main():
     DataSet_X = np.divide(DataSet_X, 255)
     # Shuffle and split data to train and test
     DataSet_X, DataSet_Y = shuffleAllData(DataSet_X, DataSet_Y)
-    #trainSize = len(DataSet_X) * sizeOfTrain
-    #trainSize = int(trainSize)
-    #print ("TRAIN SIZE IS" + str(trainSize))
 
-    #train_x, train_y = DataSet_X[:trainSize], DataSet_Y[:trainSize]
-    #test_x, test_y = DataSet_X[trainSize:], DataSet_Y[trainSize:]
+
 
     # Declarations of Hyper-Params
     hidden_size = InitH
@@ -183,6 +204,7 @@ def main():
 
     # The train algorithm
     train(params, epoch, LRT, DataSet_X, DataSet_Y)
+    # For accuracy purpose
     #accuracy = get_accuracy(W1, W2, b1, b2, test_x, test_y)
     #print(epoch, accuracy * 100)
     testingDev(Dev_X, params)
